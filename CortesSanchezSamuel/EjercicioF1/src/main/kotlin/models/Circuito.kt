@@ -1,21 +1,12 @@
 package models
 
-// Importaciones de las clases de los pilotos
-import Alonso
-import Checo
-import Hamilton
-import LeClerc
-import Russel
-import Sainz
-import Stroll
-import Verstappen
 
 // Constantes para el circuito
 private const val NUM_FILAS = 8
 private const val NUM_COLUMNAS = 10
 private const val MAX_VUELTAS = 3
 private const val PAUSE_TIME = 1000L
-private const val MAX_TIME = 29
+private const val MAX_TIME = 9
 
 /**
  * Clase que representa el circuito de carreras.

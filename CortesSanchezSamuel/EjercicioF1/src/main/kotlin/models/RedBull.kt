@@ -1,7 +1,6 @@
 package models
 
-import Checo
-import Verstappen
+
 import kotlin.random.Random
 
 /**
