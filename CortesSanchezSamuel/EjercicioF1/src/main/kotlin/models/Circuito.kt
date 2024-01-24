@@ -1,5 +1,6 @@
 package models
 
+// Importaciones de las clases de los pilotos
 import Alonso
 import Checo
 import Hamilton
@@ -9,14 +10,19 @@ import Sainz
 import Stroll
 import Verstappen
 
-private const val NUM_FILAS=8
-private const val NUM_COLUMNAS=10
-private const val MAX_VUELTAS=3
-private const val PAUSE_TIME=1000L
-private const val MAX_TIME=29
+// Constantes para el circuito
+private const val NUM_FILAS = 8
+private const val NUM_COLUMNAS = 10
+private const val MAX_VUELTAS = 3
+private const val PAUSE_TIME = 1000L
+private const val MAX_TIME = 29
 
-class Circuito{
+/**
+ * Clase que representa el circuito de carreras.
+ */
+class Circuito {
 
+    // Instancias de los pilotos
     val alonso = Alonso()
     val stroll = Stroll()
     val verstappen = Verstappen()
@@ -26,9 +32,15 @@ class Circuito{
     val sainz = Sainz()
     val leClerc = LeClerc()
 
+    // Matriz que representa la parrilla de salida
     private val parrilla = Array(NUM_FILAS) { arrayOfNulls<Piloto?>(NUM_COLUMNAS) }
+
+    // Array que contiene a todos los corredores
     private val corredores = arrayOf(alonso, stroll, verstappen, checo, hamilton, russel, sainz, leClerc)
 
+    /**
+     * Inicializa el circuito colocando a los pilotos en la parrilla y muestra la parrilla.
+     */
     init {
         alonso.inicializarPiloto(parrilla)
         stroll.inicializarPiloto(parrilla)
@@ -41,13 +53,14 @@ class Circuito{
         mostrarParrilla()
     }
 
-
-
-    private fun mostrarParrilla(){
+    /**
+     * Muestra la parrilla de salida en la consola.
+     */
+    private fun mostrarParrilla() {
         println("------------------------------------------------------------------------------------")
-        for (i in parrilla.indices){
-            for (j in parrilla[i].indices){
-                when(parrilla[i][j]){
+        for (i in parrilla.indices) {
+            for (j in parrilla[i].indices) {
+                when (parrilla[i][j]) {
                     is Alonso -> print("[A 🟦🏎️]")
                     is Stroll -> print("[S 🟦🏎️]")
                     is Verstappen -> print("[V ⬛🏎️]")
@@ -62,9 +75,11 @@ class Circuito{
             println()
         }
         println("------------------------------------------------------------------------------------")
-
     }
 
+    /**
+     * Realiza la cuenta regresiva antes de la carrera.
+     */
     fun darSalida() {
         println("🔴🔴🔴🔴 ARRANQUEN SUS MOTORES 🔴🔴🔴🔴")
         var contador = 3
@@ -80,11 +95,13 @@ class Circuito{
         } while (contador > 0)
     }
 
-
-    fun simular(){
-        var tiempo=0
+    /**
+     * Simula la carrera avanzando a los pilotos en cada vuelta hasta que se alcanza el tiempo máximo.
+     * Luego, ordena a los pilotos y muestra el podio.
+     */
+    fun simular() {
+        var tiempo = 0
         do {
-
             alonso.avanzarPosicion(parrilla)
             stroll.avanzarPosicion(parrilla)
             verstappen.avanzarPosicion(parrilla)
@@ -97,12 +114,15 @@ class Circuito{
 
             Thread.sleep(PAUSE_TIME)
             tiempo++
-        }while (tiempo< MAX_TIME )
+        } while (tiempo < MAX_TIME)
         burbuja(corredores)
         mostrarPodio()
     }
 
-    fun burbuja(array: Array<Piloto>) {
+    /**
+     * Ordena a los pilotos usando el algoritmo de burbuja.
+     */
+    private fun burbuja(array: Array<Piloto>) {
         var aux: Piloto
         for (i in 0 until array.size) {
             for (j in 0 until array.size - 1) {
@@ -115,7 +135,9 @@ class Circuito{
         }
     }
 
-
+    /**
+     * Muestra el podio al final de la carrera.
+     */
     fun mostrarPodio() {
         println("🏆🥇 Podio al final de la carrera 🥇🏆")
         for (i in 0 until 3) {
@@ -123,7 +145,4 @@ class Circuito{
             println("${i + 1}. ${piloto.nombre} - Tiempo: ${piloto.tiempo} segundos")
         }
     }
-
-
-
 }
